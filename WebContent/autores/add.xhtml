@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="../_template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="autorId" value="#{autorBean.autorId}"></f:viewParam>
+		<f:viewAction action="#{autorBean.loadById}"
+			if="#{param.autorId != null}"></f:viewAction>
+	</f:metadata>
+
+
+	<ui:define name="titulo">
+			Novo Autor
+			</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+
+			<div class="card">
+				<div class="card-body">
+
+					<p:messages id="messages" />
+
+					<br />
+					<div class="form-group row">
+						<h:outputLabel value="Nome:" for="nome"
+							styleClass="col-sm-1 col-form-label" />
+						<div class="col-sm-5">
+							<p:inputText id="nome" value="#{autorBean.autor.nome}"
+								styleClass="form-control rounded-0" required="true"
+								requiredMessage="Nome é obrigatório"
+								validatorMessage="Nome inválido">
+								<f:validateLength minimum="5" />
+								<f:ajax event="blur" render="messages"></f:ajax>
+							</p:inputText>
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<h:outputLabel value="E-mail:" for="email"
+							styleClass="col-sm-1 col-form-label" />
+						<div class="col-sm-5">
+							<p:inputText id="email" value="#{autorBean.autor.email}"
+								styleClass="form-control rounded-0" required="true"
+								requiredMessage="E-mai é obrigatorio"
+								validatorMessage="Email inválido">
+								<f:attribute name="type" value="email" />
+								<f:passThroughAttribute name="placeholder"
+									value="Email do autor" />
+								<f:validateRegex pattern=".+@.+" />
+								<f:ajax event="blur" render="messages" />
+							</p:inputText>
+						</div>
+						<p:commandButton value="Gravar" action="#{autorBean.gravar}"
+							process="@form" update="@form" styleClass="btn btn-primary" />
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

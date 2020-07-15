@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+
+<ui:composition template="../_template.xhtml">
+
+
+	<ui:define name="titulo">
+				Novo Livro
+			</ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<div class="card">
+				<div class="card-body">
+					<h:messages id="messages" styleClass="alert alert-danger bold" />
+
+					<br />
+					<div class="form-group row">
+						<h:outputLabel value="Titulo:" for="titulo"
+							styleClass="col-sm-2 col-form-label" />
+						<div class="col-sm-7">
+							<p:inputText id="titulo" value="#{livroBean.livro.titulo}"
+								required="true" requiredMessage="Título obrigatório"
+								validatorMessage="Título não pode ser superior a 40">
+								<f:validateLength maximum="40" />
+								<f:ajax event="blur" render="messages"></f:ajax>
+							</p:inputText>
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<h:outputLabel value="ISBN:" for="isbn"
+							styleClass="col-sm-2 col-form-label" />
+						<div class="col-sm-7">
+							<p:inputMask id="isbn" value="#{livroBean.livro.isbn}"
+								validator="#{livroBean.comecaComDigitoUm}"
+								mask="999-9-99-999999-9" />
+						</div>
+					</div>
+
+
+
+					<div class="form-group row">
+						<h:outputLabel value="Preço:" for="preco"
+							styleClass="col-sm-2 col-form-label" />
+						<div class="col-sm-7">
+							<p:inputNumber id="preco" value="#{livroBean.livro.preco}" />
+						</div>
+					</div>
+
+
+
+					<div class="form-group row">
+						<h:outputLabel value="Lançamento:" for="dataLancamento"
+							styleClass="col-sm-2 col-form-label" />
+						<div class="col-sm-7">
+							<p:calendar id="dataLancamento"
+								value="#{livroBean.livro.dataLancamento.time}"
+								pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" mask="true" />
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<h:outputLabel value="Autor" for="autor"
+							styleClass="col-sm-2 col-form-label" />
+						<div class="col-sm-7">
+							<p:selectOneMenu id="autor" value="#{livroBean.autorId}"
+								styleClass="col-sm-4">
+								<f:selectItems value="#{livroBean.autores}" var="autor"
+									itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
+							</p:selectOneMenu>
+
+							<br />
+
+							<p:commandLink value="Cadastrar novo autor"
+								action="#{livroBean.formAutor}" immediate="true" update="@all" />
+						</div>
+
+
+
+						<p:commandButton value="Vincular Autor"
+							action="#{livroBean.vincularAutor}" process="@this autor"
+							update="tableAutores" />
+
+
+
+					</div>
+
+
+					<p:dataTable value="#{livroBean.autoresDoLivro}" var="autor"
+						id="tableAutores" styleClass="table"
+						emptyMessage="Autor(es) não informado(s)">
+						<p:column>
+							<h:outputText value="#{autor.nome}" />
+						</p:column>
+						
+					</p:dataTable>
+
+				</div>
+			</div>
+
+			<p:commandButton value="Gravar" action="#{livroBean.gravar}"
+				styleClass="btn btn-primary" process="@form" update="@form" />
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+</html>
