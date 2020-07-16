@@ -10,4 +10,6 @@
 6. Bootstrap
 
 
+![alt text](https://github.com/renatocantarino/JsfCdiMaven/blob/master/src/main/webapp/resources/img/arq.png)
+
 
